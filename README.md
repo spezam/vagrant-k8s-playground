@@ -1,6 +1,8 @@
 # vagrant-k8s-playground
+Vagrantfile will provision a k8s master node and a worker node using kubeadm.
+NIC network is being use.
 
-generate ssh keys (no password)
+generate ssh keys
 ```sh
 mkdir -p keys
 ssh-keygen keys/id_rsa
