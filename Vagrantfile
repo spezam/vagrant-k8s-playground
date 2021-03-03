@@ -51,11 +51,11 @@ $master_script = <<-SCRIPT
 IPADDR=`ip -4 address show dev eth1 | grep inet | awk '{print $2}' | cut -f1 -d/`
 echo This VM has IP address $IPADDR
 # writing the IP address to a file in the shared folder
-echo $IPADDR > /vagrant/ipaddress
+echo $IPADDR > /vagrant/kube-apiserver-ip
 
 # set up Kubernetes
 NODENAME=$(hostname -s)
-kubeadm init --apiserver-cert-extra-sans=$IPADDR --node-name $NODENAME --apiserver-advertise-address=$IPADDR --pod-network-cidr=10.0.0.0/16
+kubeadm init --apiserver-cert-extra-sans=$IPADDR --node-name $NODENAME --apiserver-advertise-address=$IPADDR --pod-network-cidr=192.168.0.0/16
 
 # set up admin creds for the vagrant user
 echo Copying credentials to /home/vagrant...
@@ -65,10 +65,6 @@ chown $(id -u vagrant):$(id -g vagrant) /home/vagrant/.kube/config
 
 # copy admin.conf to shared vagrant dir
 cp /etc/kubernetes/admin.conf /vagrant/
-
-# install NIC network addon
-export KUBECONFIG=/home/vagrant/.kube/config
-kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')
 
 # kubectl join command
 kubeadm token create --print-join-command > /etc/kubeadm_join_cmd
