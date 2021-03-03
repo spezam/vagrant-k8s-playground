@@ -1,3 +1,4 @@
 keys
 .vagrant
 kube-apiserver-ip
+admin.conf
