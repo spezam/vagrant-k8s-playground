@@ -5,7 +5,7 @@ NIC network is being use.
 generate ssh keys
 ```sh
 mkdir -p keys
-ssh-keygen keys/id_rsa
+ssh-keygen -f keys/id_rsa
 ```
 
 start cluster
